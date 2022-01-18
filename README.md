@@ -10,7 +10,7 @@ The application provides all basic functionality required for Personal accountin
     1. Python
     2. pip
 
-###Steps:
+### Steps:
 1. install required packages using requirements.txt  
    `pip install -r requirements.txt`
 2. run application using command  
