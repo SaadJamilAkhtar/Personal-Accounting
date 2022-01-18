@@ -4,7 +4,7 @@ from .forms import *
 
 
 def index(request):
-    return render(request, '')
+    return render(request, 'Main.html')
 
 
 def createExpenseAccount(request):
