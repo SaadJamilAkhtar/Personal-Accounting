@@ -1,4 +1,4 @@
-# AccountDesk
+# AccuDesk
 The application provides all basic functionality required for Personal accounting.
 ## Tools
 1. Python
