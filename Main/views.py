@@ -34,7 +34,7 @@ def register(request):
         data = {}
         if checkUserParams(first_name, last_name, email, username, pass1, pass2):
             try:
-                user = User.objects.create_user(username, email, pass1, first_name=first_name, last_name=last_name)
+                user = AccuUser.objects.create_user(username, email, pass1, first_name=first_name, last_name=last_name)
                 user_ = authenticate(username=username, password=pass1)
                 login(request, user_)
                 return redirect(reverse('home'))
@@ -59,7 +59,7 @@ def log_out(request):
 
 def createExpenseAccount(request):
     if request.POST:
-        form = ExpenseAccountForm(request.POST)
+        form = DebitAccountForm(request.POST)
         if form.is_valid():
             form.save()
             message = "Account Created Successfully !"
@@ -73,7 +73,7 @@ def createExpenseAccount(request):
         }
         return render(request, '', data)  # add code later
 
-    form = ExpenseAccountForm()
+    form = DebitAccountForm()
     data = {
         "form": form
     }
@@ -82,7 +82,7 @@ def createExpenseAccount(request):
 
 def createRevenueAccount(request):
     if request.POST:
-        form = RevenueAccount(request.POST)
+        form = CreditAccountForm(request.POST)
         if form.is_valid():
             form.save()
             message = "Account Created Successfully !"
@@ -96,7 +96,7 @@ def createRevenueAccount(request):
         }
         return render(request, '', data)  # add code later
 
-    form = RevenueAccount()
+    form = CreditAccountForm()
     data = {
         "form": form
     }
