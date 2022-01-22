@@ -9,15 +9,15 @@ class AccountForm(forms.ModelForm):
         widgets = {}
 
 
-class ExpenseAccountForm(forms.ModelForm):
+class DebitAccountForm(forms.ModelForm):
     class Meta:
-        model = ExpenseAndAssetAccount
+        model = DebitAccount
         fields = ["name", "credit", "debit", "total"]
         widgets = {}
 
 
-class RevenueAccountForm(forms.ModelForm):
+class CreditAccountForm(forms.ModelForm):
     class Meta:
-        model = RevenueAccount
+        model = CreditAccount
         fields = ["name", "credit", "debit", "total"]
         widgets = {}

@@ -92,14 +92,38 @@
 
 
                     <li class="nav-item">
-                        <a href="" class="nav-link {% block home_active %} {% endblock %}">
+                        <a href="{% url 'home' %}" class="nav-link {% block home_active %} {% endblock %}">
                             <i class="nav-icon fas fa-book"></i>
                             <p>Home</p>
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="" class="nav-link {% block expense_active %} {% endblock %}">
+                            <i class="nav-icon fa fa-address-book"></i>
+                            <p>Asset acc</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link {% block revenue_active %} {% endblock %}">
+                            <i class="nav-icon fa fa-address-book"></i>
+                            <p>Expense acc</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link {% block expense_active %} {% endblock %}">
+                            <i class="nav-icon fa fa-address-book"></i>
+                            <p>Liability acc</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link {% block revenue_active %} {% endblock %}">
+                            <i class="nav-icon fa fa-address-book"></i>
+                            <p>Receivable acc</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{% url 'logout' %}" class="nav-link {% block logout_active %} {% endblock %}">
-                            <i class="nav-icon fas fa-book"></i>
+                            <i class="nav-icon fa fa-user-circle"></i>
                             <p>Logout</p>
                         </a>
                     </li>

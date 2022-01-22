@@ -1,19 +1,23 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class AccuUser(AbstractUser):
+    accounts = models.ManyToManyField('Account')
+
+
 class Account(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(null=False, blank=False, max_length=255, unique=True)
     credit = models.FloatField(default=0.0)
     debit = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
+    entries = models.ManyToManyField("Entry")
 
     def __str__(self):
         return self.name
 
 
-class ExpenseAndAssetAccount(Account):
+class DebitAccount(Account):
     def balanceAccount(self):
         self.total = self.debit - self.credit
         if self.total > 0:
@@ -23,7 +27,7 @@ class ExpenseAndAssetAccount(Account):
             self.credit = self.total
 
 
-class RevenueAccount(Account):
+class CreditAccount(Account):
     def balanceAccount(self):
         self.total = self.credit - self.debit
         if self.total > 0:
@@ -31,3 +35,16 @@ class RevenueAccount(Account):
         else:
             self.total = abs(self.total)
             self.debit = self.total
+
+
+class Entry(models.Model):
+    type_choices = [("C", "Credit"), ("D", "Debit")]
+    date = models.DateField(auto_now_add=True)
+    type = models.CharField(max_length=1, choices=type_choices)
+    amount = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return str(self.date) + " | " + str(self.amount) + " | " + str(self.type)
+
+    class Meta:
+        verbose_name_plural = "Entries"
