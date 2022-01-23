@@ -31,11 +31,11 @@ class Account(models.Model):
 
 
 class Entry(models.Model):
-    type_choices = [("Credit", "Credit"), ("Debit", "Debit")]
     date = models.DateField(auto_now_add=True)
-    type = models.CharField(max_length=25, choices=type_choices)
+    details = models.CharField(max_length=255)
+    credit = models.ForeignKey("Account", on_delete=models.SET_NULL, null=True, related_name="credit_acc")
+    debit = models.ForeignKey("Account", on_delete=models.SET_NULL, null=True, related_name="debit_acc")
     amount = models.FloatField(default=0.0)
-    counter = models.ForeignKey("Entry", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.date) + " | " + str(self.amount) + " | " + str(self.type)

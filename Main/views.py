@@ -13,7 +13,7 @@ def home(request):
     if request.POST:
         form = EntryForm(user, request.POST)
         if form.is_valid():
-            debit_entry = Entry.objects.create()
+            pass
     form = EntryForm(user)
     entries = user.entries
     data = {
