@@ -10,6 +10,10 @@ from .forms import *
 @login_required()
 def home(request):
     user = AccuUser.objects.get(username=request.user.username)
+    if request.POST:
+        form = EntryForm(user, request.POST)
+        if form.is_valid():
+            debit_entry = Entry.objects.create()
     form = EntryForm(user)
     entries = user.entries
     data = {

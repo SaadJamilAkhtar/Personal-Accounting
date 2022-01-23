@@ -31,9 +31,9 @@ class Account(models.Model):
 
 
 class Entry(models.Model):
-    type_choices = [("C", "Credit"), ("D", "Debit")]
+    type_choices = [("Credit", "Credit"), ("Debit", "Debit")]
     date = models.DateField(auto_now_add=True)
-    type = models.CharField(max_length=1, choices=type_choices)
+    type = models.CharField(max_length=25, choices=type_choices)
     amount = models.FloatField(default=0.0)
     counter = models.ForeignKey("Entry", on_delete=models.CASCADE)
 
