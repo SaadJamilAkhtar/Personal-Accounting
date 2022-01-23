@@ -38,7 +38,7 @@ class Entry(models.Model):
     amount = models.FloatField(default=0.0)
 
     def __str__(self):
-        return str(self.date) + " | " + str(self.amount) + " | " + str(self.type)
+        return str(self.date) + " | " + str(self.amount) + " | " + str(self.details)
 
     class Meta:
         verbose_name_plural = "Entries"

@@ -13,13 +13,28 @@ def home(request):
     if request.POST:
         form = EntryForm(user, request.POST)
         if form.is_valid():
-            pass
+            balance = form.cleaned_data.get("amount")
+            credit_acc = Account.objects.get(id=form.cleaned_data.get("credit"))
+            debit_acc = Account.objects.get(id=form.cleaned_data.get("debit"))
+            entry = Entry.objects.create(details=form.cleaned_data.get("entry"),
+                                         credit=credit_acc, debit=debit_acc,
+                                         amount=balance)
+            credit_acc.entries.add(entry)
+            credit_acc.updateBalance(balance, "cr")
+            credit_acc.save()
+            debit_acc.entries.add(entry)
+            debit_acc.updateBalance(balance, "db")
+            debit_acc.save()
+            user.entries.add(entry)
+            user.save()
+
     form = EntryForm(user)
-    entries = user.entries
+    entries = user.entries.all()
     data = {
         "page": "Dashboard",
         "title": "home",
         "form": form,
+        "entries": entries
     }
     return render(request, 'index.html', data)
 
@@ -144,3 +159,29 @@ def deleteAccount(request, id):
     if account.count() > 0:
         account.first().delete()
     return redirect(reverse("all-account"))
+
+
+@login_required()
+def resetAccounts(request):
+    user = AccuUser.objects.get(username=request.user.username)
+    for entry in user.entries.all():
+        entry.delete()
+    for account in user.accounts.all():
+        account.total = 0
+        account.save()
+    return redirect(reverse("home"))
+
+
+@login_required()
+def deleteEntry(request, id):
+    user = AccuUser.objects.get(username=request.user.username)
+    entries = user.entries.filter(id=id)
+    if entries.count() > 0:
+        entry = entries.first()
+        balance = entry.amount
+        entry.credit.updateBalance(balance, 'db')
+        entry.credit.save()
+        entry.debit.updateBalance(balance, 'cr')
+        entry.debit.save()
+        entry.delete()
+    return redirect(reverse('home'))
