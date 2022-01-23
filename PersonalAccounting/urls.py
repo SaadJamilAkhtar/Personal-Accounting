@@ -27,6 +27,9 @@ urlpatterns = [
                   path('home/', home, name='home'),
                   path('logout/', log_out, name='logout'),
                   path('register/', register, name="register"),
-                  path('registerAccount/', createAccount, name="add-account")
+                  path('registerAccount/', createAccount, name="add-account"),
+                  path('accounts/', allAccounts, name="all-account"),
+                  path('accounts/edit/<int:id>', editAccount, name="edit-account"),
+                  path('accounts/del/<int:id>', deleteAccount, name="delete-account"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

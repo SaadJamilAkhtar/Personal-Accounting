@@ -104,9 +104,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link {% block expense_active %} {% endblock %}">
+                        <a href="{% url 'all-account' %}" class="nav-link {% block account_active %} {% endblock %}">
                             <i class="nav-icon fa fa-address-book"></i>
-                            <p>Expense acc</p>
+                            <p>Accounts</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -153,6 +153,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+            {% if status %}
+                        <div class="alert alert-{{ status }}"> {{ message }} </div>
+                    {% endif %}
                 {% block body %}
                 {% endblock %}
             </div><!-- /.container-fluid -->

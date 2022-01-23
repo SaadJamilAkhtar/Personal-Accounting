@@ -14,12 +14,6 @@ class Account(models.Model):
     entries = models.ManyToManyField("Entry")
     type = models.CharField(max_length=25, choices=type_choices, default=type_choices[3][1])
 
-    def initialBalanceSetup(self):
-        if self.type in ["Receivable", "Asset", "Expense"]:
-            self.debit = self.total
-        else:
-            self.credit = self.total
-
     def updateBalance(self, balance: float, update: str):
         if self.type in ["Receivable", "Asset", "Expense"]:
             if update == "db":
