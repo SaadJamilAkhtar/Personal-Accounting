@@ -38,7 +38,7 @@ def register(request):
                 user = AccuUser.objects.create_user(username, email, pass1, first_name=first_name, last_name=last_name)
                 user_ = authenticate(username=username, password=pass1)
                 login(request, user_)
-                cash = DebitAccount.objects.create(name="Cash")
+                cash = Account.objects.create(name="Cash")
                 user.accounts.add(cash)
                 user.save()
                 return redirect(reverse('home'))
