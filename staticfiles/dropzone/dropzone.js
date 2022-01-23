@@ -10455,7 +10455,7 @@ function __guardMethod__(obj, methodName, transform) {
 }
 
 
-;// CONCATENATED MODULE: ./tool/dropzone.dist.js
+;// CONCATENATED MODULE: ./tool/dropzone.distd.js
  /// Make Dropzone a global variable.
 
 window.Dropzone = Dropzone;

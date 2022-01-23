@@ -4039,7 +4039,7 @@ var uPlot = (function () {
 					var uni = drag.uni;
 
 					if (uni != null) {
-						// only calc drag status if they pass the dist thresh
+						// only calc drag status if they pass the distd thresh
 						if (dragX && dragY) {
 							dragX = rawDX >= uni;
 							dragY = rawDY >= uni;
@@ -4091,7 +4091,7 @@ var uPlot = (function () {
 							{ setSelX(0, xDim); }
 					}
 
-					// the drag didn't pass the dist requirement
+					// the drag didn't pass the distd requirement
 					if (!dragX && !dragY) {
 						setSelX(0, 0);
 						setSelY(0, 0);
