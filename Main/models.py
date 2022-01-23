@@ -10,11 +10,31 @@ class AccuUser(AbstractUser):
 class Account(models.Model):
     type_choices = [("Payable", "Payable"), ("Expense", "Expense"), ("Receivable", "Receivable"), ("Asset", "Asset")]
     name = models.CharField(null=False, blank=False, max_length=255, unique=True)
-    credit = models.FloatField(default=0.0)
-    debit = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
     entries = models.ManyToManyField("Entry")
     type = models.CharField(max_length=25, choices=type_choices, default=type_choices[3][1])
+
+    def initialBalanceSetup(self):
+        if self.type in ["Receivable", "Asset", "Expense"]:
+            self.debit = self.total
+        else:
+            self.credit = self.total
+
+    def updateBalance(self, balance: float, update: str):
+        if self.type in ["Receivable", "Asset", "Expense"]:
+            if update == "db":
+                self.total += balance
+                self.debit += balance
+            else:
+                self.credit += balance
+                self.total -= balance
+        else:
+            if update == 'db':
+                self.total -= balance
+                self.debit += balance
+            else:
+                self.total += balance
+                self.credit += balance
 
     def __str__(self):
         return self.name

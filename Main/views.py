@@ -65,15 +65,7 @@ def createAccount(request):
     if request.POST:
         form = AccountForm(request.POST)
         if form.is_valid():
-            debit = ["Receivable", "Asset"]
-            credit = ["Payable", "Expense"]
-            acc_type = form.cleaned_data.get("type")
-            name = form.cleaned_data.get("name")
-            balance = form.cleaned_data.get("balance")
-
-            print(acc_type)
-            print(name)
-            print(balance)
+            form.save()
             message = "Account Created Successfully !"
             type = "success"
         else:
