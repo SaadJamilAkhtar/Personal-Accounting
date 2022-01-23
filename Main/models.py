@@ -9,7 +9,7 @@ class AccuUser(AbstractUser):
 
 class Account(models.Model):
     type_choices = [("Payable", "Payable"), ("Expense", "Expense"), ("Receivable", "Receivable"), ("Asset", "Asset")]
-    name = models.CharField(null=False, blank=False, max_length=255, unique=True)
+    name = models.CharField(null=False, blank=False, max_length=255, unique=False)
     total = models.FloatField(default=0.0)
     entries = models.ManyToManyField("Entry")
     type = models.CharField(max_length=25, choices=type_choices, default=type_choices[3][1])

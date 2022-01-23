@@ -106,7 +106,8 @@ def createAccount(request):
                 "page": "Register Account",
                 "title": "Reg Acc",
                 "message": message,
-                "status": type
+                "status": type,
+                "form": AccountForm()
             }
             return render(request, 'addAccount.html', data)
 
