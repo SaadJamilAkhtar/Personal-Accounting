@@ -1,5 +1,41 @@
 {% extends 'Main.html' %}
 
+{% load crispy_forms_tags %}
 {% block home_active %}
-active
+    active
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-4">
+            <div class="register-box">
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <div class="h1">Add Entry</div>
+                    </div>
+                    <div class="card-body">
+
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                            <div class="row">
+                                <div class="col-8">
+
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Add</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.form-box -->
+                </div><!-- /.card -->
+            </div>
+        </div>
+    <div class="col-8">
+
+    </div>
+    </div>
 {% endblock %}

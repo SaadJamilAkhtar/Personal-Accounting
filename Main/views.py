@@ -9,8 +9,14 @@ from .forms import *
 
 @login_required()
 def home(request):
-    data = {"page": "Dashboard",
-            "title": "home"}
+    user = AccuUser.objects.get(username=request.user.username)
+    form = EntryForm(user)
+    entries = user.entries
+    data = {
+        "page": "Dashboard",
+        "title": "home",
+        "form": form,
+    }
     return render(request, 'index.html', data)
 
 

@@ -30,31 +30,12 @@ class Account(models.Model):
         return self.name
 
 
-# class DebitAccount(Account):
-#     def balanceAccount(self):
-#         self.total = self.debit - self.credit
-#         if self.total > 0:
-#             self.debit = self.total
-#         else:
-#             self.total = abs(self.total)
-#             self.credit = self.total
-#
-#
-# class CreditAccount(Account):
-#     def balanceAccount(self):
-#         self.total = self.credit - self.debit
-#         if self.total > 0:
-#             self.credit = self.total
-#         else:
-#             self.total = abs(self.total)
-#             self.debit = self.total
-
-
 class Entry(models.Model):
     type_choices = [("C", "Credit"), ("D", "Debit")]
     date = models.DateField(auto_now_add=True)
     type = models.CharField(max_length=1, choices=type_choices)
     amount = models.FloatField(default=0.0)
+    counter = models.ForeignKey("Entry", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.date) + " | " + str(self.amount) + " | " + str(self.type)
