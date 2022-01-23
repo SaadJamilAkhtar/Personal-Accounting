@@ -24,16 +24,12 @@ class Account(models.Model):
         if self.type in ["Receivable", "Asset", "Expense"]:
             if update == "db":
                 self.total += balance
-                self.debit += balance
             else:
-                self.credit += balance
                 self.total -= balance
         else:
             if update == 'db':
                 self.total -= balance
-                self.debit += balance
             else:
-                self.total += balance
                 self.credit += balance
 
     def __str__(self):
