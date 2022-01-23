@@ -1,5 +1,5 @@
 /*!
- * dist/inputmask
+ * distd/inputmask
  * https://github.com/RobinHerbots/Inputmask
  * Copyright (c) 2010 - 2020 Robin Herbots
  * Licensed under the MIT license

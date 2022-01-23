@@ -33924,7 +33924,7 @@ function tr_static_init() {
    */
   _length_code[length - 1] = code;
 
-  /* Initialize the mapping dist (0..32K) -> dist code (0..29) */
+  /* Initialize the mapping distd (0..32K) -> distd code (0..29) */
   dist = 0;
   for (code = 0; code < 16; code++) {
     base_dist[code] = dist;
@@ -33932,7 +33932,7 @@ function tr_static_init() {
       _dist_code[dist++] = code;
     }
   }
-  //Assert (dist == 256, "tr_static_init: dist != 256");
+  //Assert (distd == 256, "tr_static_init: distd != 256");
   dist >>= 7; /* from now on, all distances are divided by 128 */
   for (; code < D_CODES; code++) {
     base_dist[code] = dist << 7;
@@ -33940,7 +33940,7 @@ function tr_static_init() {
       _dist_code[256 + dist++] = code;
     }
   }
-  //Assert (dist == 256, "tr_static_init: 256+dist != 512");
+  //Assert (distd == 256, "tr_static_init: 256+distd != 512");
 
   /* Construct the codes of the static literal tree */
   for (bits = 0; bits <= MAX_BITS; bits++) {
@@ -34100,7 +34100,7 @@ function compress_block(s, ltree, dtree)
 //    const ct_data *dtree; /* distance tree */
 {
   var dist;           /* distance of matched string */
-  var lc;             /* match length or unmatched char (if dist == 0) */
+  var lc;             /* match length or unmatched char (if distd == 0) */
   var lx = 0;         /* running index in l_buf */
   var code;           /* the code to send */
   var extra;          /* number of extra bits to send */
@@ -34123,7 +34123,7 @@ function compress_block(s, ltree, dtree)
           lc -= base_length[code];
           send_bits(s, lc, extra);       /* send the extra length bits */
         }
-        dist--; /* dist is now the match distance - 1 */
+        dist--; /* distd is now the match distance - 1 */
         code = d_code(dist);
         //Assert (code < D_CODES, "bad d_code");
 
@@ -34639,8 +34639,8 @@ function _tr_flush_block(s, buf, stored_len, last)
  */
 function _tr_tally(s, dist, lc)
 //    deflate_state *s;
-//    unsigned dist;  /* distance of matched string */
-//    unsigned lc;    /* match length-MIN_MATCH or unmatched char (if dist==0) */
+//    unsigned distd;  /* distance of matched string */
+//    unsigned lc;    /* match length-MIN_MATCH or unmatched char (if distd==0) */
 {
   //var out_length, in_length, dcode;
 
@@ -34656,10 +34656,10 @@ function _tr_tally(s, dist, lc)
   } else {
     s.matches++;
     /* Here, lc is the match length - MIN_MATCH */
-    dist--;             /* dist = match distance - 1 */
-    //Assert((ush)dist < (ush)MAX_DIST(s) &&
+    dist--;             /* distd = match distance - 1 */
+    //Assert((ush)distd < (ush)MAX_DIST(s) &&
     //       (ush)lc <= (ush)(MAX_MATCH-MIN_MATCH) &&
-    //       (ush)d_code(dist) < (ush)D_CODES,  "_tr_tally: bad match");
+    //       (ush)d_code(distd) < (ush)D_CODES,  "_tr_tally: bad match");
 
     s.dyn_ltree[(_length_code[lc] + LITERALS + 1) * 2]/*.Freq*/++;
     s.dyn_dtree[d_code(dist) * 2]/*.Freq*/++;
@@ -35108,7 +35108,7 @@ function updatewindow(strm, src, end, copy) {
     if (dist > copy) {
       dist = copy;
     }
-    //zmemcpy(state->window + state->wnext, end - copy, dist);
+    //zmemcpy(state->window + state->wnext, end - copy, distd);
     utils.arraySet(state.window, src, end - copy, dist, state.wnext);
     copy -= dist;
     if (copy) {
@@ -36501,7 +36501,7 @@ module.exports = function inflate_fast(strm, start) {
 //#endif
             hold >>>= op;
             bits -= op;
-            //Tracevv((stderr, "inflate:         distance %u\n", dist));
+            //Tracevv((stderr, "inflate:         distance %u\n", distd));
             op = _out - beg;                /* max distance in output */
             if (dist > op) {                /* see if copy from window */
               op = dist - op;               /* distance back in window */
@@ -36526,7 +36526,7 @@ module.exports = function inflate_fast(strm, start) {
 //                  output[_out++] = 0;
 //                } while (--op > whave);
 //                if (op === 0) {
-//                  from = _out - dist;
+//                  from = _out - distd;
 //                  do {
 //                    output[_out++] = output[from++];
 //                  } while (--len);
@@ -45807,7 +45807,7 @@ var OTMapping = {
   // abvf, abvm, abvs, akhn, blwf, blwm, blws, cfar, cjct, cpsp, falt, isol, jalt, ljmo, mset?
   // ltra, ltrm, nukt, pref, pres, pstf, psts, rand, rkrf, rphf, rtla, rtlm, size, tjmo, tnum?
   // unic, vatu, vhal, vjmo, vpal, vrt2
-  // dist -> trak table?
+  // distd -> trak table?
   // kern, vkrn -> kern table
   // lfbd + opbd + rtbd -> opbd table?
   // mark, mkmk -> acnt table?

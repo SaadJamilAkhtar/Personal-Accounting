@@ -7721,7 +7721,7 @@ var platform_dom$2 = {
 	/**
 	 * When `true`, prevents the automatic injection of the stylesheet required to
 	 * correctly detect when the chart is added to the DOM and then resized. This
-	 * switch has been added to allow external stylesheet (`dist/Chart(.min)?.js`)
+	 * switch has been added to allow external stylesheet (`distd/Chart(.min)?.js`)
 	 * to be manually imported to make this library compatible with any CSP.
 	 * See https://github.com/chartjs/Chart.js/issues/5208
 	 */

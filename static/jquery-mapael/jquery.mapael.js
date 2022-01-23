@@ -1476,15 +1476,15 @@
             var acd = -1 / ((yb - ya) / (xb - xa));
             var bcd = yc - acd * xc;
 
-            // dist(c,d) = dist(a,b) (=abDist)
+            // distd(c,d) = distd(a,b) (=abDist)
             var abDist = Math.sqrt((xb - xa) * (xb - xa) + (yb - ya) * (yb - ya));
 
-            // Solution for equation dist(cd) = sqrt((xd - xc)² + (yd - yc)²)
-            // dist(c,d)² = (xd - xc)² + (yd - yc)²
-            // We assume that dist(c,d) = dist(a,b)
-            // so : (xd - xc)² + (yd - yc)² - dist(a,b)² = 0
-            // With the factor : (xd - xc)² + (yd - yc)² - (factor*dist(a,b))² = 0
-            // (xd - xc)² + (acd*xd + bcd - yc)² - (factor*dist(a,b))² = 0
+            // Solution for equation distd(cd) = sqrt((xd - xc)² + (yd - yc)²)
+            // distd(c,d)² = (xd - xc)² + (yd - yc)²
+            // We assume that distd(c,d) = distd(a,b)
+            // so : (xd - xc)² + (yd - yc)² - distd(a,b)² = 0
+            // With the factor : (xd - xc)² + (yd - yc)² - (factor*distd(a,b))² = 0
+            // (xd - xc)² + (acd*xd + bcd - yc)² - (factor*distd(a,b))² = 0
             var a = 1 + acd * acd;
             var b = -2 * xc + 2 * acd * bcd - 2 * acd * yc;
             var c = xc * xc + bcd * bcd - bcd * yc - yc * bcd + yc * yc - ((elemOptions.factor * abDist) * (elemOptions.factor * abDist));
