@@ -1,6 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .authUser import checkUserParams
@@ -9,7 +8,9 @@ from .forms import *
 
 
 def home(request):
-    return render(request, 'index.html', {"page": "Dashboard"})
+    data = {"page": "Dashboard",
+            "title": "home"}
+    return render(request, 'index.html', data)
 
 
 def index(request):
@@ -37,6 +38,9 @@ def register(request):
                 user = AccuUser.objects.create_user(username, email, pass1, first_name=first_name, last_name=last_name)
                 user_ = authenticate(username=username, password=pass1)
                 login(request, user_)
+                cash = DebitAccount.objects.create(name="Cash")
+                user.accounts.add(cash)
+                user.save()
                 return redirect(reverse('home'))
             except:
                 data["status"] = "danger"
@@ -57,47 +61,36 @@ def log_out(request):
     return redirect('/')
 
 
-def createExpenseAccount(request):
+def createAccount(request):
     if request.POST:
-        form = DebitAccountForm(request.POST)
+        form = AccountForm(request.POST)
         if form.is_valid():
-            form.save()
+            debit = ["Receivable", "Asset"]
+            credit = ["Payable", "Expense"]
+            acc_type = form.cleaned_data.get("type")
+            name = form.cleaned_data.get("name")
+            balance = form.cleaned_data.get("balance")
+
+            print(acc_type)
+            print(name)
+            print(balance)
             message = "Account Created Successfully !"
             type = "success"
         else:
             message = "Account Was Not Created. Try Again !"
             type = "error"
         data = {
+            "page": "Register Account",
+            "title": "Reg Acc",
             "message": message,
             "type": type
         }
-        return render(request, '', data)  # add code later
+        return render(request, 'addAccount.html', data)  # add code later
 
-    form = DebitAccountForm()
+    form = AccountForm()
     data = {
-        "form": form
+        "form": form,
+        "page": "Register Account",
+        "title": "Reg Acc"
     }
-    return render(request, '', data)  # add code later
-
-
-def createRevenueAccount(request):
-    if request.POST:
-        form = CreditAccountForm(request.POST)
-        if form.is_valid():
-            form.save()
-            message = "Account Created Successfully !"
-            type = "success"
-        else:
-            message = "Account Was Not Created. Try Again !"
-            type = "error"
-        data = {
-            "message": message,
-            "type": type
-        }
-        return render(request, '', data)  # add code later
-
-    form = CreditAccountForm()
-    data = {
-        "form": form
-    }
-    return render(request, '', data)  # add code later
+    return render(request, 'addAccount.html', data)  # add code later

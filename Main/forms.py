@@ -2,22 +2,9 @@ from django import forms
 from .models import *
 
 
-class AccountForm(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ["name", "credit", "debit", "total"]
-        widgets = {}
+class AccountForm(forms.Form):
+    type_choices = [("Payable", "Payable"), ("Expense", "Expense"), ("Receivable", "Receivable"), ("Asset", "Asset")]
+    name = forms.CharField(max_length=25, required=True)
+    type = forms.ChoiceField(choices=type_choices)
+    balance = forms.FloatField(min_value=0.0, initial=0.0, required=True)
 
-
-class DebitAccountForm(forms.ModelForm):
-    class Meta:
-        model = DebitAccount
-        fields = ["name", "credit", "debit", "total"]
-        widgets = {}
-
-
-class CreditAccountForm(forms.ModelForm):
-    class Meta:
-        model = CreditAccount
-        fields = ["name", "credit", "debit", "total"]
-        widgets = {}
