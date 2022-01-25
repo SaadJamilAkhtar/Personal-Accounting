@@ -23,7 +23,7 @@
                 <tbody>
                 {% for acc in accounts %}
                     <tr>
-                        <td>{{ acc.name }}</td>
+                        <td><a href="{% url 'account-details' acc.id %}">{{ acc.name }}</a></td>
                         <td>{{ acc.type }}</td>
                         <td>{{ acc.total }}</td>
                         <td class="text-center"><a href="{% url 'edit-account' acc.id %}"

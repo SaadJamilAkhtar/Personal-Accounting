@@ -1,0 +1,46 @@
+{% extends 'Main.html' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ account.name }}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Details</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.date }}</td>
+                        <td>{{ entry.details }}</td>
+                        {% if entry.debit.id == account.id %}
+                            <td>{{ entry.amount }}</td>
+                            <td></td>
+                        {% else %}
+                            <td></td>
+                            <td>{{ entry.amount }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="2" class="text-center"><h2>Total</h2></th>
+                    <th colspan="2" class="text-center"><h2>{{ account.total }}</h2></th>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+
+        </div>
+    </div>
+{% endblock %}

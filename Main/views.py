@@ -186,3 +186,19 @@ def deleteEntry(request, id):
         entry.debit.save()
         entry.delete()
     return redirect(reverse('home'))
+
+
+@login_required()
+def accountDetails(request, id):
+    user = AccuUser.objects.get(username=request.user.username)
+    accounts = user.accounts.filter(id=id)
+    if accounts.count() > 0:
+        account = accounts.first()
+        entries = account.entries.all()
+        data = {
+            "account": account,
+            "entries": entries,
+            "page": "Account Details",
+            "title": account.name,
+        }
+        return render(request, 'accountDetail.html', data)
