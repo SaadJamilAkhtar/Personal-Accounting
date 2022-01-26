@@ -3,8 +3,13 @@ from django.db import models
 
 
 class AccuUser(AbstractUser):
+    profile = models.ImageField()
+    currency = models.CharField(max_length=5, default="$")
     accounts = models.ManyToManyField('Account')
     entries = models.ManyToManyField("Entry")
+
+    def fullName(self):
+        return self.first_name + " " + self.last_name
 
 
 class Account(models.Model):
