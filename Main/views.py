@@ -206,3 +206,22 @@ def accountDetails(request, id):
             "title": account.name,
         }
         return render(request, 'accountDetail.html', data)
+
+
+@login_required()
+def profile(request, username):
+    if request.user.username == username:
+        user = AccuUser.objects.get(username=username)
+        if request.POST:
+            form = RegistrationForm()
+            if form.is_valid():
+                print("Yup ...")
+        data = {
+            "page": "Profile",
+            "title": user.fullName(),
+            'form': RegistrationForm(
+                initial={"username": user.username, "email": user.email, "currency": user.currency,
+                         "first_name": user.first_name, "last_name": user.last_name})
+        }
+        return render(request, 'profile.html', data)
+    return redirect(reverse('home'))

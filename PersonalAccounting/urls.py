@@ -34,5 +34,6 @@ urlpatterns = [
                   path('accounts/reset', resetAccounts, name="reset-account"),
                   path('entry/delete/<int:id>', deleteEntry, name="delete-entry"),
                   path('account/<int:id>', accountDetails, name="account-details"),
+                  path('profile/<str:username>', profile, name="profile"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

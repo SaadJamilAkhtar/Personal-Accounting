@@ -1,5 +1,19 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+
+
+class RegistrationForm(forms.Form):
+    username = forms.CharField(max_length=255)
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    currency = forms.CharField(max_length=5)
+    email = forms.EmailField()
+    pass1 = forms.CharField(label="Password", widget=forms.PasswordInput(), required=False)
+    pass2 = forms.CharField(label="Retype Password", widget=forms.PasswordInput(), required=False)
+
 
 
 class AccountForm(forms.ModelForm):

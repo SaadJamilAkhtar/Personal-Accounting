@@ -60,16 +60,18 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ user.profile.url }}" class="img-circle elevation-2" style="width: 35px; height: 35px;"
-                         alt="User Image">
+            <a href="{% url 'profile' user.username %}">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="{{ user.profile.url }}" class="img-circle elevation-2"
+                             style="width: 35px; height: 35px;"
+                             alt="User Image">
+                    </div>
+                    <div class="info">
+                        <div class="d-block" style="color: white">{{ user.fullName | capfirst }}</div>
+                    </div>
                 </div>
-                <div class="info">
-                    <div class="d-block" style="color: white">{{ user.fullName | capfirst }}</div>
-                </div>
-            </div>
-
+            </a>
             <!-- SidebarSearch Form -->
             <div class="form-inline">
                 <div class="input-group" data-widget="sidebar-search">
@@ -133,9 +135,9 @@
                         <h1 class="m-0">{{ page }}</h1>
                     </div><!-- /.col -->
                     {% if cash %}
-                    <div class="col-4">
-                        <h1>Current Budget : {{ cash.total }}</h1>
-                    </div>
+                        <div class="col-4">
+                            <h1>Current Budget : {{ cash.total }}</h1>
+                        </div>
                     {% endif %}
 
                 </div><!-- /.row -->
@@ -146,9 +148,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-            {% if status %}
-                        <div class="alert alert-{{ status }}"> {{ message }} </div>
-                    {% endif %}
+                {% if status %}
+                    <div class="alert alert-{{ status }}"> {{ message }} </div>
+                {% endif %}
                 {% block body %}
                 {% endblock %}
             </div><!-- /.container-fluid -->
