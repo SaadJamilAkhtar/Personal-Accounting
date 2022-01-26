@@ -3,7 +3,7 @@ from django.db import models
 
 
 class AccuUser(AbstractUser):
-    profile = models.ImageField()
+    profile = models.ImageField(upload_to="profile/", default="user.png")
     currency = models.CharField(max_length=5, default="$")
     accounts = models.ManyToManyField('Account')
     entries = models.ManyToManyField("Entry")
