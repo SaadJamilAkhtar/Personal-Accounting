@@ -10,6 +10,7 @@ from .forms import *
 @login_required()
 def home(request):
     user = AccuUser.objects.get(username=request.user.username)
+    cash = user.accounts.get(name='Cash')
     if request.POST:
         form = EntryForm(user, request.POST)
         if form.is_valid():
@@ -34,7 +35,8 @@ def home(request):
         "page": "Dashboard",
         "title": "home",
         "form": form,
-        "entries": entries
+        "entries": entries,
+        "cash": cash
     }
     return render(request, 'index.html', data)
 
@@ -123,10 +125,12 @@ def createAccount(request):
 @login_required()
 def allAccounts(request):
     user = AccuUser.objects.get(username=request.user.username)
+    cash = user.accounts.get(name='Cash')
     data = {
         "page": "Accounts",
         "title": "accounts",
-        "accounts": user.accounts.all()
+        "accounts": user.accounts.all(),
+        "cash": cash
     }
     return render(request, 'accounts.html', data)
 
