@@ -15,6 +15,15 @@
     <link rel="stylesheet" href={% static 'icheck-bootstrap/icheck-bootstrap.min.css' %}>
     <!-- Theme style -->
     <link rel="stylesheet" href={% static 'distd/css/adminlte.min.css' %}>
+    <style>
+        body {
+            background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url({% static 'distd/img/bg.jpg' %}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body class="hold-transition register-page">
 {% if status %}

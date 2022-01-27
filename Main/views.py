@@ -211,17 +211,35 @@ def accountDetails(request, id):
 @login_required()
 def profile(request, username):
     if request.user.username == username:
-        user = AccuUser.objects.get(username=username)
         if request.POST:
-            form = RegistrationForm()
+            form = RegistrationForm(request.POST, request.FILES)
             if form.is_valid():
-                print("Yup ...")
+                user = AccuUser.objects.get(username=username)
+                user.username = form.cleaned_data.get("username")
+                user.first_name = form.cleaned_data.get("first_name")
+                user.last_name = form.cleaned_data.get("last_name")
+                user.email = form.cleaned_data.get("email")
+                user.currency = form.cleaned_data.get("currency")
+                if form.cleaned_data.get("profile"):
+                    user.profile = form.cleaned_data.get("profile")
+                pass1 = form.cleaned_data.get("pass1")
+                pass2 = form.cleaned_data.get("pass2")
+                if pass1 and pass2 and pass1 == pass2 and str(pass1).isalnum() and len(str(pass1)) > 7:
+                    user.set_password(pass1)
+                user.save()
+                login(request, user)
+                return redirect(reverse("profile", kwargs={'username': user.username}))
+            else:
+                print(form.errors)
+
+        user = AccuUser.objects.get(username=username)
         data = {
             "page": "Profile",
             "title": user.fullName(),
             'form': RegistrationForm(
                 initial={"username": user.username, "email": user.email, "currency": user.currency,
-                         "first_name": user.first_name, "last_name": user.last_name})
+                         "first_name": user.first_name, "last_name": user.last_name, "profile": user.profile}),
+            "user_": user
         }
         return render(request, 'profile.html', data)
     return redirect(reverse('home'))

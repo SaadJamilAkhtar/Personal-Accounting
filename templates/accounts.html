@@ -6,43 +6,49 @@
 
 {% block body %}
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Accounts</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Balance</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for acc in accounts %}
+                            <tr>
+                                <td><a href="{% url 'account-details' acc.id %}">{{ acc.name }}</a></td>
+                                <td>{{ acc.type }}</td>
+                                <td>{{ acc.total }}</td>
+                                <td class="text-center"><a href="{% url 'edit-account' acc.id %}"
+                                                           class="btn btn-secondary">Edit</a></td>
+                                <td class="text-center"><a
+                                        onclick="return confirm('Are you sure you want to delete this Account?')"
+                                        href="{% url 'delete-account' acc.id %}"
+                                        class="btn btn-danger">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
 
-
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Accounts</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Balance</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for acc in accounts %}
-                    <tr>
-                        <td><a href="{% url 'account-details' acc.id %}">{{ acc.name }}</a></td>
-                        <td>{{ acc.type }}</td>
-                        <td>{{ acc.total }}</td>
-                        <td class="text-center"><a href="{% url 'edit-account' acc.id %}"
-                                                   class="btn btn-secondary">Edit</a></td>
-                        <td class="text-center"><a onclick="return confirm('Are you sure you want to delete this Account?')" href="{% url 'delete-account' acc.id %}"
-                                                   class="btn btn-danger">Delete</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-
+                </div>
+            </div>
         </div>
     </div>
+
+
 {% endblock %}
 

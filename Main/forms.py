@@ -5,6 +5,8 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 
 
+# add image field in registration form
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=255)
     first_name = forms.CharField(max_length=255)
@@ -13,7 +15,7 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField()
     pass1 = forms.CharField(label="Password", widget=forms.PasswordInput(), required=False)
     pass2 = forms.CharField(label="Retype Password", widget=forms.PasswordInput(), required=False)
-
+    profile = forms.ImageField(required=False)
 
 
 class AccountForm(forms.ModelForm):
